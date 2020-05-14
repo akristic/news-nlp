@@ -1,16 +1,19 @@
-const dotenv = require('dotenv');
-dotenv.config();
 var path = require('path')
 const express = require('express')
 const mockAPIResponse = require('./mockAPI.js')
+const dotenv = require('dotenv');
+dotenv.config();
 const AYLIENTextAPI = require('aylien_textapi');
-const app = express()
-
 
 let textapi = new AYLIENTextAPI({
     application_id: process.env.API_ID,
     application_key: process.env.API_KEY
   });
+const app = express()
+
+// Cors for cross origin allowance
+const cors = require('cors');
+app.use(cors());
 
 app.use(express.static('dist'))
 
@@ -21,20 +24,33 @@ app.get('/', function (req, res) {
     res.sendFile('dist/index.html')
 })
 
-// designates what port the app will listen to for incoming requests
-app.listen(8081, function () {
-    console.log('Example app listening on port 8081!')
-})
+// Setup Server
+const port = 8081;
+const server = app.listen(port, listening);
+
+function listening(){
+    console.log('server running');
+    console.log(`running on localhost: ${port}`);
+}
 
 app.get('/test', function (req, res) {
     res.send(mockAPIResponse)
 })
-app.get('/nlp', function (req, res) {
-    textapi.sentiment({
-        'text': 'John is a very good football player!'
-      }, function(error, response) {
-        if (error === null) {
-          console.log(response);
-        }
-      });
+
+app.post('/nlp', async (req, res) => {
+  try {
+    console.log("::: try :::");
+    const result = await textapi.sentiment({
+      'text': 'John is a very good football player!'
+    }, function(error, response) {
+      console.log("::: func :::");
+      if (error === null) {
+          console.log("::: if :::");
+          res.send(response);
+      }
+    });
+  } catch (error){
+    res.send(error);
+  }
 })
+
