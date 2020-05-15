@@ -1,27 +1,36 @@
+
+const postData = async ( url = '', data = {})=>{
+    const response = await fetch(url, {
+    method: 'POST', 
+    credentials: 'same-origin',
+    headers: {
+        'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data) 
+  });
+    try {
+      const newData = await response.json();
+      return newData;
+    }catch(error) {
+    console.log("error", error);
+    }
+}
+
+
 function handleSubmit(event) {
     event.preventDefault()
 
     // check what text was put into the form field
     let formText = document.getElementById('name').value
     Client.checkForName(formText)
-
-    const text = document.getElementById('name');
-    let body = JSON.stringify({text: text.value})
-    
+    let data = {text: formText};
     // check if text is url
-    if (/https?:\/\/.+\.[a-z]{2,3}/g.test(text.value)) {
-        body = JSON.stringify({url: text.value})
+    if (/https?:\/\/.+\.[a-z]{2,3}/g.test(formText)) {
+        data = {url: formText}
     }
-
+    console.log(data);
     console.log("::: Form Submitted :::")
-    fetch('http://localhost:8081/nlp', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body,
-    })
-    .then(res => res.json())
+    postData('http://localhost:8081/nlp', data)
     .then(function(res) {
         console.log(res)
         document.getElementById('results').innerHTML = res.polarity;
