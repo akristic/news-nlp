@@ -4,6 +4,7 @@ var path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
 const mockAPIResponse = require('./mockAPI.js');
+const polyfill = require("@babel/polyfill");
 const cors = require('cors');
 const AYLIENTextAPI = require('aylien_textapi');
 
@@ -44,6 +45,9 @@ app.post('/nlp', async (req, res) => {
     textapi.sentiment(req.body, function(error, response) {
       if (error === null) {
           res.send(response);
+      }else{
+          console.log(error);
+          res.send({error: "Ups! Somthing went wrong, check your input."});
       }
     });
   } catch (error){

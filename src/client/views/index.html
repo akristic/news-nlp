@@ -2,22 +2,27 @@
 <html lang="en" dir="ltr">
     <head>
         <meta charset="utf-8">
-        <title>Test</title>
+        <title>Natural language processing</title>
     </head>
     <body>
-
         <header>
             <div class="">
-                Logo
+                NLP 
             </div>
             <div class="">
-                navigation
+                <nav class="">
+                    <ul id="navbar__list">
+                        <li>Home</li>
+                        <li>How it works</li>
+                        <li>Contact</li>
+                    </ul>
+                  </nav>
             </div>
         </header>
-
         <main>
             <section>
                 <form class="" onsubmit="return handleSubmit(event)">
+                    <label id="message">Input your text or url</label>
                     <input id="name" type="text" name="input" value="" placeholder="Name">
                     <input type="submit" name="" value="submit" onclick="return Client.handleSubmit(event)" onsubmit="return handleSubmit(event)">
                 </form>
@@ -28,7 +33,6 @@
                 <div id="results"></div>
             </section>
         </main>
-
         <footer>
             <p>This is a footer</p>
         </footer>

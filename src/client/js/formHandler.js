@@ -1,3 +1,4 @@
+import "regenerator-runtime/runtime"; //for jest
 
 const postData = async ( url = '', data = {})=>{
     const response = await fetch(url, {
@@ -16,25 +17,42 @@ const postData = async ( url = '', data = {})=>{
     }
 }
 
-
 function handleSubmit(event) {
     event.preventDefault()
 
     // check what text was put into the form field
     let formText = document.getElementById('name').value
-    Client.checkForName(formText)
-    let data = {text: formText};
-    // check if text is url
-    if (/https?:\/\/.+\.[a-z]{2,3}/g.test(formText)) {
-        data = {url: formText}
+    
+    // check if text is url or text
+    let data = Client.checkForInputType(formText)
+    if (data.error != null){
+        document.getElementById('message').innerHTML = data.error
+        return;
+    }else{
+        document.getElementById('message').innerHTML = "Input your text or url"
     }
     console.log(data);
     console.log("::: Form Submitted :::")
     postData('http://localhost:8081/nlp', data)
     .then(function(res) {
         console.log(res)
-        document.getElementById('results').innerHTML = res.polarity;
+        document.getElementById('results').innerHTML = createResultHTML(res);
     })
 }
 
+function createResultHTML(data){
+    const resultHTML = 
+    `<div class="card">
+        <p>Details:</p>
+        <ul>
+            <li><span class="bold">Polarity</span>: ${data.polarity}</li>
+            <li><span class="bold">Polarity Confidence;</span>: ${data.polarity_confidence}</li>
+            <li><span class="bold">Subjectivity:</span>: ${data.subjectivity}</li>
+            <li><span class="bold">Subjectivity Confidence;</span>: ${data.subjectivity_confidence}</li>
+        </ul>
+        <p>Text:</p>
+        <p>${data.text}</p>
+    </div>`;
+return resultHTML;
+}
 export { handleSubmit }
