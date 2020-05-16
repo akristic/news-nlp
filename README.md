@@ -1,3 +1,33 @@
+# Project News-nlp
+### Udacitiy Project 4 for Front End Developer ND
+
+This is a complete project for Udacity Front End Developer ND completed by Ante Kristic. Project is completed by folowing instructions in this readme. You can follow my progress by looking commits.
+
+### Install instruction
+Go to main folder where is package.json file and run:
+- `npm install`
+
+### Configs
+There is webpack developer mode and production mode.
+To run developer mode run:
+- `npm run build-dev`
+To run production mode run:
+- `npm run build-prod`
+This will create all needed files in dist folder.
+To run the server run:
+- `npm run start`
+Server is run on localhost:8081
+
+### Content
+There is one simple hmtl file in client/views folder. Two js files are in clinet/js folder. CSS files are in client/styles folder.
+### Ofline Functionality
+There is basic service worker that will allow to refresh page in offline mode but Alylien api will not work if our express server is not started
+
+### Testing
+To run Jest test run:
+ - `npm run test`
+
+
 # Project Instructions
 
 This repo is your starter code for the project. It is the same as the starter code we began with in lesson 2. Install and configure Webpack just as we did in the course. Feel free to refer to the course repo as you build this one, and remember to make frequent commits and to create and merge branches as necessary!

@@ -1,5 +1,4 @@
 function checkForInputType(inputText) {
-    console.log("::: Running checkForInputType :::", inputText);
     const text = inputText.trim()
     if(text===""){
         return {error: "Empty String Error"}
