@@ -36,7 +36,13 @@ function handleSubmit(event) {
     postData('http://localhost:8081/nlp', data)
     .then(function(res) {
         console.log(res)
-        document.getElementById('results').innerHTML = createResultHTML(res);
+        if(res.polarity != null){
+            document.getElementById('message').innerHTML = "Input your text or url"
+            document.getElementById('results').innerHTML = createResultHTML(res);
+        }else{
+            document.getElementById('message').innerHTML = "Something is wrong with your input! Check if your url is working."
+        }
+        
     })
 }
 
